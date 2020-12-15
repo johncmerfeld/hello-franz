@@ -5,6 +5,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Calendar;
 import java.util.List;
 
 @RestController
@@ -18,7 +22,10 @@ public class KafkaController {
 
     @GetMapping("/kafka/produce")
     public void produce(@RequestParam String message) {
-        template.send("myTopic", message);
+        Date date = Calendar.getInstance().getTime();
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+        String strDate = dateFormat.format(date);
+        template.send("myTopic", strDate + " -- " + message);
     }
 
 }
