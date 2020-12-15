@@ -12,7 +12,7 @@ git clone git@github.com:johncmerfeld/hello-franz.git
 
   2. **Download Kafka**
 
-From [this page](https://kafka.apache.org/downloads), download the latest Kafka binary (this project was built with `kafka_2.13-2.6.0.tgz`). Kafka requires Zookeeper to run, but that software is bundled with the Kafka download. Un-tar the contents of the download and move the folder's contents to this repo – it is not strictly necessary that you do this, but subsequent instructions will assume you did something like this:
+From [this page](https://kafka.apache.org/downloads), download the latest Kafka binary (this project was built with `kafka_2.13-2.6.0.tgz`). Kafka requires Zookeeper to run, but that software is bundled with the Kafka download. Un-tar the contents of the download and move the folder's contents to this repo – it is not strictly necessary that you do this, but subsequent instructions will assume you did something like:
 ```shell
 # from the repo's root directory
 mv ~/Downloads/kafka_2.13-2.6.0.tgz .
@@ -29,7 +29,7 @@ brew install gradle
 ```
 will do the trick. Otherwise, use your OS's preferred package manager.
 
-  4. **Initialize Zookeepr**
+  4. **Initialize Zookeeper**
 
 In a new terminal window, start up your Zookeeper server like this:
 ```shell
