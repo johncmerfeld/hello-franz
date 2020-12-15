@@ -22,22 +22,42 @@ rm -rf kafka_2.13-2.6.0 kafka_2.13-2.6.0.tgz
 ```
 
   3. Download Gradle
-If you're running on a Mac, `brew install gradle` will do the trick. Otherwise, use your OS's preferred package manager
+If you're running on a Mac, 
+```shell
+brew install gradle
+```
+will do the trick. Otherwise, use your OS's preferred package manager
 
   4. Run the Spring Initializer
-Run `sh init-spring.sh` – this will download the gradle config files from the [Spring Initializer](https://start.spring.io/) that we need to build our application (mostly this boils down to dependency management)
+Run 
+```shell 
+sh init-spring.sh
+```
+This will download the gradle config files from the [Spring Initializer](https://start.spring.io/) that we need to build our application (mostly this boils down to dependency management)
 
   5. Initialize Zookeepr
-In a new terminal window, start up your Zookeeper server like this: `sh bin/zookeeper-server-start.sh config/zookeeper.properties`
+In a new terminal window, start up your Zookeeper server like this:
+```shell
+sh bin/zookeeper-server-start.sh config/zookeeper.properties
+```
 
   6. Initialize a Kafka Broker
-In a new terminal window, start up the Kafka server - which will handle the distribution of messages from Producers to Consumers - like this: `sh bin/kafka-server-start.sh config/server.properties`
+In a new terminal window, start up the Kafka server - which will handle the distribution of messages from Producers to Consumers - like this: 
+```shell
+sh bin/kafka-server-start.sh config/server.properties
+```
 
   7. Create a topic
-Your producers need a Kafka topic to publish to, and your consumer needs something to subscribe to: `sh bin/kafka-topics.sh --create --topic myTopic -zookeeper localhost:2181 --replication-factor 1 --partitions 1`
+Your producers need a Kafka topic to publish to, and your consumer needs something to subscribe to: 
+```shell
+sh bin/kafka-topics.sh --create --topic myTopic -zookeeper localhost:2181 --replication-factor 1 --partitions 1
+```
 
   8. Initialize a Kafka consumer
-In order to check whether your application is working, create a Kafka consumer in yet one more terminal window: `sh bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic myTopic`
+In order to check whether your application is working, create a Kafka consumer in yet one more terminal window: 
+```shell
+sh bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic myTopic
+```
 
   9. Build and start the Spring application
 If you've done everything right to this point, you should be able to execute a `gradle build` to bundle all of your dependencies...... In sum, it should look like this:
