@@ -1,4 +1,4 @@
-package com.hellofranz;
+package com.hellofranz.controller;
 
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
