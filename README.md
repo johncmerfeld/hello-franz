@@ -74,6 +74,5 @@ gradle bootRun
 
 ### TODO
 
-4. Try to simplify package
 5. Create custom consumer
 6. Learn more about what's going on here (and write about it!) / explain what the init-spring script is for
