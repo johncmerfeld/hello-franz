@@ -66,7 +66,7 @@ gradle bootRun
 
   9. **Test the application**
 
-  Go to [http://localhost:8080/kafka/produce?message=Hello,%20%world!](http://localhost:8080/kafka/produce?message=Hello, world!") to send the message "Hello, world!" through your Kafka application. Go to the terminal window where your console consumer is running and verify that "Hello, world!" has been printed to the screen with a timestamp
+  Go to [http://localhost:8080/kafka/produce?message=Hello, world!](http://localhost:8080/kafka/produce?message=Hello%20%world!") to send the message "Hello, world!" through your Kafka application. Go to the terminal window where your console consumer is running and verify that "Hello, world!" has been printed to the screen with a timestamp
 
 
 ### TODO
