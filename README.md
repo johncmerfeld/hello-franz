@@ -71,8 +71,3 @@ gradle bootRun
 
   Go to [http://localhost:8080/kafka/produce?message=Hello, world!](http://localhost:8080/kafka/produce?message=Hello,%20world!) to send the message "Hello, world!" through your Kafka application. Go to the terminal window where your console consumer is running and verify that "Hello, world!" has been printed to the screen with a timestamp
 
-
-### TODO
-
-5. Create custom consumer
-6. Learn more about what's going on here (and write about it!) / explain what the init-spring script is for

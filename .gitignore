@@ -1,6 +1,8 @@
 HELP.md
+TODO.md
 .gradle
 build/
+
 
 ## KAFKA
 libs/
