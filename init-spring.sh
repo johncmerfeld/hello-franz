@@ -1,5 +1,7 @@
 #!/usr/bin/env sh
 
+# WARNING: Don't use this unless you're remaking the source code from scratch! It is not recommended
+
 # download build automation dependencies from Spring Initializer
 curl https://start.spring.io/starter.zip -d language=java \
  -d bootVersion=2.2.1.RELEASE \
