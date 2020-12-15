@@ -1,5 +1,5 @@
 # hello-franz
-Hello World application built with Spring Boot and Apache Kafka
+Hello World application built with Spring Boot and Apache Kafka. I wasn't having any luck with other online tutorials for getting this stuff to work together in a proof-of-concept example, so I decided to create my own. I can't promise that this will work on the first try, but I've tried to include the exact code structure and set of steps you need to see how Kafka can work behind a simple web app!
 
 ## Prerequisites beyond the scope of these instructions
   - A JDK (this project uses [Java 1.8](https://www.oracle.com/java/technologies/javase/javase-jdk8-downloads.html) -- if you download a newer version, you will need to modify `init-spring.sh`)
