@@ -23,16 +23,17 @@ rm -rf kafka_2.13-2.6.0 kafka_2.13-2.6.0.tgz
 
   3. **Download Gradle**
 
-If you're running on a Mac, 
+If you're running on a Mac with Homebrew, 
 ```shell
 brew install gradle
 ```
-will do the trick. Otherwise, use your OS's preferred package manager
+will do the trick. Otherwise, use your OS's preferred package manager.
 
   4. **Initialize Zookeepr**
 
 In a new terminal window, start up your Zookeeper server like this:
 ```shell
+# Terminal window 2
 sh bin/zookeeper-server-start.sh config/zookeeper.properties
 ```
 
@@ -40,6 +41,7 @@ sh bin/zookeeper-server-start.sh config/zookeeper.properties
 
 In a new terminal window, start up the Kafka server - which will handle the distribution of messages from Producers to Consumers - like this: 
 ```shell
+# Terminal window 3
 sh bin/kafka-server-start.sh config/server.properties
 ```
 
@@ -54,6 +56,7 @@ sh bin/kafka-topics.sh --create --topic myTopic -zookeeper localhost:2181 --repl
 
 In order to check whether your application is working, create a Kafka consumer in yet one more terminal window: 
 ```shell
+# Terminal window 4
 sh bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic myTopic
 ```
 
@@ -66,11 +69,11 @@ gradle bootRun
 
   9. **Test the application**
 
-  Go to [http://localhost:8080/kafka/produce?message=Hello, world!](http://localhost:8080/kafka/produce?message=Hello%20%world!") to send the message "Hello, world!" through your Kafka application. Go to the terminal window where your console consumer is running and verify that "Hello, world!" has been printed to the screen with a timestamp
+  Go to [http://localhost:8080/kafka/produce?message=Hello, world!](http://localhost:8080/kafka/produce?message=Hello,%20world!) to send the message "Hello, world!" through your Kafka application. Go to the terminal window where your console consumer is running and verify that "Hello, world!" has been printed to the screen with a timestamp
 
 
 ### TODO
 
 4. Try to simplify package
 5. Create custom consumer
-6. Learn more about what's going on here (and write about it!)
+6. Learn more about what's going on here (and write about it!) / explain what the init-spring script is for
