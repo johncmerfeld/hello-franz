@@ -62,7 +62,7 @@ In order to check whether your application is working, create a Kafka consumer i
 # Terminal window 4
 sh bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic johncmerfeld
 # optional: Terminal window 5
-sh bin/kafka-console-consumer.sh --boostrap-server localhost:9092 --topic kjmerf
+sh bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic kjmerf
 
 ```
 
