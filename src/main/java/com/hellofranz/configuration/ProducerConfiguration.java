@@ -2,6 +2,8 @@ package com.hellofranz.configuration;
 
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.core.DefaultKafkaProducerFactory;
@@ -36,5 +38,18 @@ public class ProducerConfiguration {
     public KafkaTemplate<String, String> kafkaTemplate() {
         return new KafkaTemplate<>(producerFactory());
     }
+
+
+    public static String[] allTopics;
+    @Autowired
+    @Value("${kafka.topics}")
+    private void setAllTopics(String[] value) {
+        this.allTopics = value;
+    }
+
+    public static String[] getAllTopics() {
+        return allTopics;
+    }
+
 
 }
