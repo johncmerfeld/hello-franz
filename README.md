@@ -45,19 +45,25 @@ In a new terminal window, start up the Kafka server - which will handle the dist
 sh bin/kafka-server-start.sh config/server.properties
 ```
 
-  6. **Create a topic**
+  6. **Create two topic**
 
-Your producers need a Kafka topic to publish to, and your consumer needs something to subscribe to: 
+Your producers need Kafka topics to publish to, and your consumer needs something to subscribe to: 
 ```shell
-sh bin/kafka-topics.sh --create --topic myTopic -zookeeper localhost:2181 --replication-factor 1 --partitions 1
+sh bin/kafka-topics.sh --create --topic johncmerfeld -zookeeper localhost:2181 --replication-factor 1 --partitions 1
+sh bin/kafka-topics.sh --create --topic kjmerf -zookeeper localhost:2181 --replication-factor 1
 ```
+
+This creates the topics `johncmerfeld` and `kjmerf` - we are essentially pretending that this is a messaging service, and that `johncmerfeld` and `kjmerf` are two of the users
 
   7. **Initialize a Kafka consumer**
 
 In order to check whether your application is working, create a Kafka consumer in yet one more terminal window: 
 ```shell
 # Terminal window 4
-sh bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic myTopic
+sh bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic johncmerfeld
+# optional: Terminal window 5
+sh bin/kafka-console-consumer.sh --boostrap-server localhost:9092 --topic kjmerf
+
 ```
 
   8. **Build and start the Spring application**
@@ -69,5 +75,5 @@ gradle bootRun
 
   9. **Test the application**
 
-  Go to [http://localhost:8080/kafka/produce?message=Hello, world!](http://localhost:8080/kafka/produce?message=Hello,%20world!) to send the message "Hello, world!" through your Kafka application. Go to the terminal window where your console consumer is running and verify that "Hello, world!" has been printed to the screen with a timestamp
+  Go to [http://localhost:8080/send?message=Hello, world!&to=johncmerfeld](http://localhost:8080/send?message=Hello,%20world!&to=johncmerfeld) to send the message "Hello, world!" through your Kafka application. Go to the terminal window where your `johncmerfeld` console consumer is running and verify that "Hello, world!" has been printed to the screen with a timestamp. If you go to the `kjmerf` consumer, you will see that no message is printed there. Try changing the `to` parameter in your URL to send a message to `kjmerf`!
 
