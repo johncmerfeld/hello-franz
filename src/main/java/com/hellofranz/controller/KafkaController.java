@@ -1,6 +1,5 @@
 package com.hellofranz.controller;
 
-import com.hellofranz.configuration.GlobalConfiguration;
 import com.hellofranz.configuration.ProducerConfiguration;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,7 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 
-import java.util.ArrayList;
 
 @RestController
 public class KafkaController {
