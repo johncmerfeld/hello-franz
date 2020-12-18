@@ -50,7 +50,7 @@ sh bin/kafka-server-start.sh config/server.properties
 Your producers need Kafka topics to publish to, and your consumer needs something to subscribe to: 
 ```shell
 sh bin/kafka-topics.sh --create --topic johncmerfeld -zookeeper localhost:2181 --replication-factor 1 --partitions 1
-sh bin/kafka-topics.sh --create --topic kjmerf -zookeeper localhost:2181 --replication-factor 1
+sh bin/kafka-topics.sh --create --topic kjmerf -zookeeper localhost:2181 --replication-factor 1 --partitions 1
 ```
 
 This creates the topics `johncmerfeld` and `kjmerf` - we are essentially pretending that this is a messaging service, and that `johncmerfeld` and `kjmerf` are two of the users
