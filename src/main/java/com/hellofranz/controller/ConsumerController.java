@@ -36,9 +36,6 @@ public class ConsumerController {
         System.out.println("Subscribing to " + username + "...");
         Consumer<String, Object> consumer = NativeConsumer.createConsumer(username);
 
-        /* FIXME this is probably bad logic */
-        //consumer.subscribe(Collections.singletonList(username));
-
         // poll messages from last 10 days
         ConsumerRecords<String, Object> consumerRecords = consumer.poll(Duration.ofDays(10));
 

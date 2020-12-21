@@ -1,5 +1,7 @@
 package com.hellofranz.nativekafka;
 
+import org.apache.kafka.clients.admin.AdminClient;
+import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.clients.consumer.*;
 import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.common.serialization.LongDeserializer;
@@ -7,8 +9,11 @@ import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
 
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Properties;
+import java.util.concurrent.ExecutionException;
 
 public class NativeConsumer {
 
@@ -29,6 +34,28 @@ public class NativeConsumer {
         props.put(ConsumerConfig.GROUP_ID_CONFIG, "0");
         props.put(JsonDeserializer.TRUSTED_PACKAGES, "*");
         props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
+
+        AdminClient admin = AdminClient.create(props);
+        boolean topicExists = false;
+        try {
+             topicExists = admin.listTopics().names().get().stream().anyMatch(topicName -> topicName.equalsIgnoreCase(topic));
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+
+        if (! topicExists) {
+            AdminClient adminClient = AdminClient.create(props);
+            NewTopic newTopic = new NewTopic(topic, 1, (short)1); //new NewTopic(topicName, numPartitions, replicationFactor)
+
+            List<NewTopic> newTopics = new ArrayList<NewTopic>();
+            newTopics.add(newTopic);
+
+            adminClient.createTopics(newTopics);
+            adminClient.close();
+        }
 
         // Create the consumer using props.
         final Consumer<String, Object> consumer = new KafkaConsumer<>(props);
