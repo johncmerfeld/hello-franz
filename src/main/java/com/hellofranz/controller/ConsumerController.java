@@ -33,7 +33,7 @@ public class ConsumerController {
     public String consumeMessage(@RequestParam String username) {
 
         //ConsumerFactory<String, Object> consumerFactory = getConsumerFactoryInstance();
-
+        System.out.println("Subscribing to " + username + "...");
         Consumer<String, Object> consumer = NativeConsumer.createConsumer(username);
 
         /* FIXME this is probably bad logic */
@@ -51,6 +51,8 @@ public class ConsumerController {
         while (recordIterator.hasNext()) {
             results += recordIterator.next().value() + "<br>";
         }
+
+        consumer.close();
 
         return results;
     }

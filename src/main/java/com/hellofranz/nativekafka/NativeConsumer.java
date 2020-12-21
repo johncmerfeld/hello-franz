@@ -31,11 +31,9 @@ public class NativeConsumer {
         props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
 
         // Create the consumer using props.
-        final Consumer<String, Object> consumer =
-                new KafkaConsumer<>(props);
+        final Consumer<String, Object> consumer = new KafkaConsumer<>(props);
 
         // Subscribe to the topic.
-        //consumer.subscribe(Collections.singletonList(TOPIC_1));
         consumer.subscribe(Collections.singletonList(topic));
         return consumer;
     }

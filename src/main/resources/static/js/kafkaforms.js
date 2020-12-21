@@ -20,7 +20,12 @@ $(document).ready(function(){
                to: values['to'] //$('#username').val()
            },
            success: function(data,status) {
-               $("#sendform").after("<p> Sent! </p>");
+               // if this is our first message, add the send flag
+               if (!($("#sentdiv").length)) {
+                   $("#sendform").after("<div id=\"sentdiv\"> <p> Sent! </p> </div>");
+               }
+               // in any case, highlight it
+               $("#sentdiv").effect("highlight", {}, 2000);
            }
        });
     });

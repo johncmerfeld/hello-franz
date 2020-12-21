@@ -29,9 +29,3 @@ dependencies {
 test {
 	useJUnitPlatform()
 }
-
-processResources {
-	exclude('src/main/java/com/hellofranz/configuration/ConsumerConfiguration.java')
-	exclude('src/main/java/com/hellofranz/services/KafkaConsumerService.java')
-	exclude('src/main/java/com/hellofranz/nativekafka/NativeConsumer.java')
-}
