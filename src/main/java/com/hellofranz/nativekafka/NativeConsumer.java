@@ -12,9 +12,11 @@ import java.util.Properties;
 
 public class NativeConsumer {
 
-    private final static String TOPIC = "kjmerf";
+    private final static String TOPIC_1 = "kjmerf";
+    private final static String TOPIC_2 = "johncmerfeld";
+
     private final static String BOOTSTRAP_SERVERS =
-            "localhost:9092,localhost:9093,localhost:9094";
+            "localhost:9092";//localhost:9093,localhost:9094";
 
     public static Consumer<String, Object> createConsumer() {
         final Properties props = new Properties();
@@ -35,7 +37,8 @@ public class NativeConsumer {
                 new KafkaConsumer<>(props);
 
         // Subscribe to the topic.
-        consumer.subscribe(Collections.singletonList(TOPIC));
+        //consumer.subscribe(Collections.singletonList(TOPIC_1));
+        consumer.subscribe(Collections.singletonList(TOPIC_2));
         return consumer;
     }
 

@@ -4,37 +4,17 @@
     <title>Hello Franz!</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script>
-        $(document).ready(function(){
-          $("#receiveform").submit(function(e){
-            e.preventDefault();
-            var values = {};
-            $.each($('#receiveform').serializeArray(), function(i, field) {
-              values[field.name] = field.value;
-            });
-            console.log(values['username']);
-            $.ajax({
-              url: "receive",
-              type: "get",
-              data: {
-                username: values['username'] //$('#username').val()
-              },
-              success: function(data,status){
-                console.log("Data: " + data + "\nStatus: " + status);
-              }
-            })
-          });
-        });
-    </script>
+    <script src="js/kafkaforms.js"></script>
 </head>
 <body>
 
     <h1>Welcome to the hello-franz advanced messaging app</h1>
 
     <iframe name="blankframe" id="blankframe" style="display:none;"></iframe>
-    <form name="sendmessage" action="send" method="POST" target="blankframe" >
+    <form name="sendmessage" id="sendform" action="send" method="POST" target="blankframe" >
             <h2> Send a message to your friends </h2>
             <label>Message:</label> <input type='text' name='message' />
+            <label>To:</label> <input type='text' name='to' />
             <button type="submit" value="Submit">Send</button>
     </form>
 
@@ -43,6 +23,8 @@
         <label>Username:</label> <input type='text' name='username' />
         <button type="submit" value="Submit">Get Messages</button>
     </form>
+
+    <!-- TODO insert element after the form with the messiagis >
 
 </body>
 </html>

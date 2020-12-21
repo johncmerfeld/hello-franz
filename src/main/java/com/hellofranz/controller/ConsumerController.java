@@ -49,7 +49,7 @@ public class ConsumerController {
         });
         final Iterator<ConsumerRecord<String, Object>> recordIterator = consumerRecords.iterator();
         while (recordIterator.hasNext()) {
-            results += "{" + recordIterator.next().value() + "}\n";
+            results += recordIterator.next().value() + "<br>";
         }
 
         return results;
