@@ -15,7 +15,7 @@ git clone git@github.com:johncmerfeld/hello-franz.git
 From [this page](https://kafka.apache.org/downloads), download the latest Kafka binary (this project was built with `kafka_2.13-2.6.0.tgz`). Kafka requires Zookeeper to run, but that software is bundled with the Kafka download. Un-tar the contents of the download and move the folder's contents to this repo – it is not strictly necessary that you do this, but subsequent instructions will assume you did something like:
 ```shell
 # from the repo's root directory
-mv ~/Downloads/kafka_2.13-2.6.0.tgz .
+cp -r ~/Downloads/kafka_2.13-2.6.0.tgz .
 tar --exclude=LICENSE -xzvf kafka_2.13-2.6.0.tgz
 mv kafka_2.13-2.6.0/* .
 rm -rf kafka_2.13-2.6.0 kafka_2.13-2.6.0.tgz
