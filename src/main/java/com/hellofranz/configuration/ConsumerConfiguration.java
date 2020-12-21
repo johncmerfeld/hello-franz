@@ -46,6 +46,7 @@ public class ConsumerConfiguration {
         configurations.put(ConsumerConfig.GROUP_ID_CONFIG, "0");
         /* below this point -- really not sure */
         configurations.put(JsonDeserializer.TRUSTED_PACKAGES, "*");
+        configurations.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
         return configurations;
     }
 

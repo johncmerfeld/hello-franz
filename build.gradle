@@ -15,12 +15,14 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.kafka:spring-kafka'
-	//implementation 'org.apache.kafka:kafka-clients:2.6.0'
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	implementation 'org.apache.kafka:kafka-clients:2.2.0'
 	implementation 'joda-time:joda-time:2.2'
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}
 	testImplementation 'org.springframework.kafka:spring-kafka-test'
+	// developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	// compile 'joda-time:joda-time:2.10.8'
 }
 

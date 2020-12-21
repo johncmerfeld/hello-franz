@@ -3,6 +3,7 @@ package com.hellofranz.controller;
 import com.hellofranz.configuration.ProducerConfiguration;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,7 +27,7 @@ public class KafkaController {
      * Other TODO script that creates a topic and adds to some kind of file?
      * @param message
      */
-    @GetMapping("/send")
+    @PostMapping("/send")
     public void produce(@RequestParam String message,
                         @RequestParam(value = "to", required = false) String recipient) {
 
