@@ -4,36 +4,28 @@ import org.apache.kafka.clients.admin.AdminClient;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.clients.consumer.*;
 import org.apache.kafka.clients.consumer.Consumer;
-import org.apache.kafka.common.serialization.LongDeserializer;
-import org.apache.kafka.common.serialization.StringDeserializer;
-import org.springframework.kafka.support.serializer.JsonDeserializer;
 
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
 import java.util.concurrent.ExecutionException;
 
+import com.hellofranz.configuration.ConsumerConfiguration;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+@Component
 public class NativeConsumer {
 
-    private final static String TOPIC_1 = "kjmerf";
-    private final static String TOPIC_2 = "johncmerfeld";
 
-    private final static String BOOTSTRAP_SERVERS =
-            "localhost:9092";//localhost:9093,localhost:9094";
+    private static ConsumerConfiguration conf;
+
+    @Autowired
+    public void setConf(ConsumerConfiguration conf) {
+        this.conf = conf;
+    }
 
     public static Consumer<String, Object> createConsumer(String topic) {
-        final Properties props = new Properties();
-        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG,
-                BOOTSTRAP_SERVERS);
-        props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG,
-                LongDeserializer.class.getName());
-        props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG,
-                StringDeserializer.class.getName());
-        props.put(ConsumerConfig.GROUP_ID_CONFIG, "0");
-        props.put(JsonDeserializer.TRUSTED_PACKAGES, "*");
-        props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
+        final Map<String, Object> props = conf.getConfig();
 
         AdminClient admin = AdminClient.create(props);
         boolean topicExists = false;

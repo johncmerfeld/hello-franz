@@ -1,8 +1,6 @@
 package com.hellofranz.configuration;
 
 import org.apache.kafka.clients.producer.ProducerConfig;
-import org.apache.kafka.common.serialization.StringSerializer;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,7 +14,11 @@ import java.util.Map;
 @Configuration
 public class ProducerConfiguration {
 
-    private static final String KAFKA_BROKER = "localhost:9092";
+    @Value("${kafka.broker}")
+    private String KAFKA_BROKER;
+
+    @Value("${kafka.serializers.str}")
+    private Object STRING_SERIALIZER;
 
     @Bean
     public ProducerFactory<String, String> producerFactory() {
@@ -25,13 +27,14 @@ public class ProducerConfiguration {
 
     @Bean
     public Map<String, Object> producerConfigurations() {
-        Map<String, Object> configurations = new HashMap<>();
+        Map<String, Object> props = new HashMap<>();
+        System.out.println(KAFKA_BROKER);
 
-        configurations.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, KAFKA_BROKER);
-        configurations.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
-        configurations.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
+        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, KAFKA_BROKER);
+        props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, STRING_SERIALIZER);
+        props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, STRING_SERIALIZER);
 
-        return configurations;
+        return props;
     }
 
     @Bean
@@ -39,16 +42,8 @@ public class ProducerConfiguration {
         return new KafkaTemplate<>(producerFactory());
     }
 
-
-    public static String[] allTopics;
-    @Autowired
-    @Value("${kafka.topics}")
-    private void setAllTopics(String[] value) {
-        this.allTopics = value;
-    }
-
     public static String[] getAllTopics() {
-        return allTopics;
+        return new String[]{"johncmerfeld", "kjmerf", "baogorek"};
     }
 
 

@@ -2,7 +2,6 @@ package com.hellofranz.controller;
 
 import com.hellofranz.configuration.ProducerConfiguration;
 import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,9 +21,6 @@ public class KafkaController {
 
     /**
      * TODO topic list from file! Global vs. individual sends, defult to Global
-     * Lookup isNone in query strings
-     * TODO entrypoint by topic??? // topic as queryString param
-     * Other TODO script that creates a topic and adds to some kind of file?
      * @param message
      */
     @PostMapping("/send")

@@ -1,0 +1,11 @@
+kafka:
+  broker: 'localhost:9092'
+  serializers:
+    str: org.apache.kafka.common.serialization.StringSerializer
+  deserializers:
+    str: org.apache.kafka.common.serialization.StringDeserializer
+    long: org.apache.kafka.common.serialization.LongDeserializer
+  consumers:
+    group_id: '0'
+    trusted_packages: '*'
+    auto_offset_reset: 'earliest'

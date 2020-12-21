@@ -6,17 +6,12 @@ import java.util.Map;
 
 
 import org.apache.kafka.clients.consumer.Consumer;
-import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
-import org.apache.kafka.common.serialization.StringDeserializer;
-import org.springframework.kafka.core.ConsumerFactory;
-import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
-import org.springframework.kafka.support.serializer.JsonDeserializer;
+
 import org.springframework.web.bind.annotation.*;
 
 import com.hellofranz.nativekafka.NativeConsumer;
-//import com.hybriscx.demo.kafka.kafkademo.KafkaAwareController;
 
 
 @RestController
