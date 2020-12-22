@@ -14,11 +14,11 @@ import java.util.concurrent.ExecutionException;
 
 
 @Controller
-public class KafkaController {
+public class ProducerController {
 
     private KafkaTemplate<String, String> template;
 
-    public KafkaController(KafkaTemplate<String, String> template) {
+    public ProducerController(KafkaTemplate<String, String> template) {
         this.template = template;
     }
 
@@ -26,6 +26,8 @@ public class KafkaController {
     public String produceGet(@RequestParam String message,
                            @RequestParam(value = "to", required = false) String recipient, Model model) throws ExecutionException, InterruptedException {
         produce(message, recipient);
+
+        // returns an HTML 'template' with the message written to it
         model.addAttribute("message", message);
         return "sendSuccess";
     }

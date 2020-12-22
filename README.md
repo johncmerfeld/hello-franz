@@ -1,5 +1,5 @@
 # hello-franz
-Hello World application built with Spring Boot and Apache Kafka. I wasn't having any luck with other online tutorials for getting this stuff to work together in a proof-of-concept example, so I decided to create my own. I can't promise that this will work on the first try, but I've tried to include the exact code structure and set of steps you need to see how Kafka can work behind a simple web app!
+This is a Hello World+ application built with Spring Boot and Apache Kafka. I wasn't having any luck with other online tutorials for getting this stuff to work together in a proof-of-concept example, so I decided to create my own. I can't promise that this will work on the first try, but I've tried to include the exact code structure and set of steps you need to see how Kafka can work behind a simple web app!
 
 ## Prerequisites beyond the scope of these instructions
   - A JDK (this project uses [Java 1.8](https://www.oracle.com/java/technologies/javase/javase-jdk8-downloads.html) -- if you download a newer version, you will need to modify `init-spring.sh`)
@@ -45,27 +45,6 @@ In a new terminal window, start up the Kafka server - which will handle the dist
 sh bin/kafka-server-start.sh config/server.properties
 ```
 
-  6. **Create two topic**
-
-Your producers need Kafka topics to publish to, and your consumer needs something to subscribe to: 
-```shell
-sh bin/kafka-topics.sh --create --topic johncmerfeld -zookeeper localhost:2181 --replication-factor 1 --partitions 1
-sh bin/kafka-topics.sh --create --topic kjmerf -zookeeper localhost:2181 --replication-factor 1 --partitions 1
-```
-
-This creates the topics `johncmerfeld` and `kjmerf` - we are essentially pretending that this is a messaging service, and that `johncmerfeld` and `kjmerf` are two of the users
-
-  7. **Initialize a Kafka consumer**
-
-In order to check whether your application is working, create a Kafka consumer in yet one more terminal window: 
-```shell
-# Terminal window 4
-sh bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic johncmerfeld
-# optional: Terminal window 5
-sh bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic kjmerf
-
-```
-
   8. **Build and start the Spring application**
 If you've done everything right to this point, you should be able to execute a `gradle build` to bundle all of your dependencies...... In sum, it should look like this:
 ```shell
@@ -75,5 +54,10 @@ gradle bootRun
 
   9. **Test the application**
 
-  Go to [http://localhost:8080/send?message=Hello, world!&to=johncmerfeld](http://localhost:8080/send?message=Hello,%20world!&to=johncmerfeld) to send the message "Hello, world!" through your Kafka application. Go to the terminal window where your `johncmerfeld` console consumer is running and verify that "Hello, world!" has been printed to the screen with a timestamp. If you go to the `kjmerf` consumer, you will see that no message is printed there. Try changing the `to` parameter in your URL to send a message to `kjmerf`!
+  To really get a feel for what we're doing here, open [http://localhost:8080](http://localhost:8080/) in **two** separate tabs. In the first one, type in a random message in the `Message` field and any made-up "user name" in the `To` field, and cilck `Send`. You should see the word `Sent!` flash on your screen. You can send as many as you like.
 
+  Now go to the second tab. In the `Username` field below `Check your unread messages`, type in the same name you sent the message to above. Click `Get latest messages`, and the message(s) you sent before should be printed to your screen! If you have multiple devices on the same network, you can test the send/receive functionality between them.
+
+# How this works
+
+A full explanation of [Kafka](https://kafka.apache.org/intro) or [Spring](https://docs.spring.io/spring-framework/docs/current/reference/html/overview.html) is outside the scope of this project, but I will try to talk through how this application works so that others can get things working. Additionally, the comments in the Java files are meant to be instructive (to me and whoever reads this).

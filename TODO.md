@@ -1,8 +1,7 @@
 ### TODO
- -- "View as" user
  -- Logging to files! / mongo?
  -- Branch for "tutorial version"
- -- Display success message to API endpoint (SO question about this?)
+     -- (SO question about ThymeLeaf with RestController)
  -- Separate divs for users?
  -- Rewrite readme
 
