@@ -16,12 +16,14 @@ import java.util.concurrent.ExecutionException;
 @Controller
 public class ProducerController {
 
+    // our producer
     private KafkaTemplate<String, String> template;
 
     public ProducerController(KafkaTemplate<String, String> template) {
         this.template = template;
     }
 
+    // vanilla API wrapper for requests that don't come through index.html
     @GetMapping("/send")
     public String produceGet(@RequestParam String message,
                            @RequestParam(value = "to", required = false) String recipient, Model model) throws ExecutionException, InterruptedException {
@@ -32,19 +34,20 @@ public class ProducerController {
         return "sendSuccess";
     }
 
-
     @PostMapping("/send")
     @ResponseBody // i.e. return directly as HTML, not a view
     public void produce(@RequestParam String message,
                         @RequestParam(value = "to", required = false) String recipient) throws ExecutionException, InterruptedException {
 
-
+        // add timestamp to message
         DateTime dt = new DateTime(DateTimeZone.UTC);
 
+        // add new "user" if not exists
         if (recipient != null) {
             NativeAdmin.createTopicIfNotExists(recipient);
             template.send(recipient, dt + " -- " + message);
         } else {
+            // otherwise send to everyone
             ArrayList<String> topics = NativeAdmin.getAllTopics();
             for (String topic : topics) {
                 System.out.println("Sending to " + topic);

@@ -90,6 +90,6 @@ Let's consider what happened in our example above. When you click `Send`, the HT
 
 When we "check" our messages as a particular user, a GET request is issued to the `/receive` endpoint, which is handled by the `ConsumerController`. It creates a Kafka `NativeConsumer` and polls the server for all messages that have come in for that particular topic since the last request was made (if the topic is not recognized, the administrator will create one, but it won't have any messages). These messages are returned to the `index.html` page, which uses JQuery (JavaScript) to print them all as a list on the screen.
 
-## Chronological view from the application's perspecive
+## Chronological view from the application's perspective
 
-(in progress)
+My understanding of Spring is far from perfect, so this section is in progress. I think a key insight for me was the difference between using the `new` keyword to create instances of objects, and instead using `@Autowired` to load singleton instances of classes within other classes. Notice, for example, how the `NativeConsumer` loads in its `ConsumerConfiguration` without using `new`. This is possible because we define the `ConsumerConfiguration` as a `@Configuration` and its method `getConsumerConfig()` as a `@Bean`. This appears to be how Spring knows to make the method "publicly" available and ready to be "wired" into `NativeConsumer`. I think the best way to learn more about Spring's particular brand of inversion of control is to get to know this codebase and see what happens when you remove the various annotations. 
