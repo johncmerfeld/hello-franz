@@ -80,13 +80,16 @@ Inside `src/main/resources/static/` are HTML and JavaScript files that allow the
 
 Following Java convention, the folder structure inside `src/main/java` simulates the different parts of an internet domain read in reverse (i.e., hellofranz.com). Inside the `hellofranz` package root is a `main`-like file required by Spring. It contains the `HelloFranzApplication` class, whose `main` method is what actually gets run when we execute `gradle bootRun`.
 
-Inside the `configuration/` directory are config classes that use Spring to load in properties of our Kafka producer and consumer. The `nativekafka/` directory contains a class that uses the consumer configuration to create an actual Kafka Consumer instance. We don't need to do this for the Kafka producer because it is written entirely in Spring's Kafka API, instead of the native Kafka Java library. The consumer does use the Java library, however, so we need to define it in greater detail. This was done as a design choice - the application would behave slightly different if we were forced to use Spring's default consumer behavior.
+Inside the `configuration/` directory are config classes that use Spring to load in properties of our Kafka producer, consumer, and administrator. The `nativekafka/` directory contains classes that uses configurations to create instances of the consumer and admin. We don't need to do this for the Kafka producer because it is written entirely in Spring's Kafka API, instead of the native Kafka Java library. The consumer and admin do use the Java library, however, so we need to define them in greater detail. This was done as a design choice - the application would behave slightly different if we were forced to use Spring Kafka's default behavior.
 
 Finally, the `controller/` directory contains the code that actually responds to the user by defining methods that respond to various HTTP requests. The controller layer is the most "forward-facing" part of the backend, built on top of the classes we mentioned above. For example, the consumer controller creates a `nativekafka.NativeConsumer`, and instantiates it using information from `configuration.ConsumerConfiguration`.
 
 ## Chronological view from the user's perspective
 
-Let's consider what happened in our example above. When you click `Send`, the HTTP POST request is issued to the `/send` endpoint (see `kafkaforms.js` for how this data gets sent). POST requests to the `/send` endpoint are handled by the `ProducerController`, which keeps a Kafka producer template running int he background. When a new message comes in, the controller 
+Let's consider what happened in our example above. When you click `Send`, the HTTP POST request is issued to the `/send` endpoint (see `kafkaforms.js` for how this data gets sent). POST requests to the `/send` endpoint are handled by the `ProducerController`, which keeps a Kafka producer template running in the background. When a new message comes in, the controller thinks of the message's intended recipient as a Kafka topic. It asks the Kafka administrator to check whether the topic exists, and if not, to create it. It then publishes the message to that topic. If the POST request has no recipient attached, the controller asks the administrator for a list of all of the existing topics, and publishes the message to all of them.
+
+When we "check" our messages as a particular user, a GET request is issued to the `/receive` endpoint, which is handled by the `ConsumerController`. It creates a Kafka `NativeConsumer` and polls the server for all messages that have come in for that particular topic since the last request was made (if the topic is not recognized, the administrator will create one, but it won't have any messages). These messages are returned to the `index.html` page, which uses JQuery (JavaScript) to print them all as a list on the screen.
 
 ## Chronological view from the application's perspecive
-  - Injecting stuff, etc.
+
+(in progress)

@@ -12,7 +12,7 @@ import org.joda.time.DateTimeZone;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
-
+// we use @Controller instead of @RestController because we provide REST as well as standard HTML responses
 @Controller
 public class ProducerController {
 
@@ -32,13 +32,7 @@ public class ProducerController {
         return "sendSuccess";
     }
 
-    /**
-     *
-     * @param message
-     * @param recipient
-     * @throws ExecutionException
-     * @throws InterruptedException
-     */
+
     @PostMapping("/send")
     @ResponseBody // i.e. return directly as HTML, not a view
     public void produce(@RequestParam String message,
