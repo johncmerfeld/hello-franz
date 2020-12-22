@@ -1,5 +1,5 @@
 # hello-franz
-This is a Hello World+ application built with Spring Boot and Apache Kafka. I wasn't having any luck with other online tutorials for getting this stuff to work together in a proof-of-concept example, so I decided to create my own. I can't promise that this will work on the first try, but I've tried to include the exact code structure and set of steps you need to see how Kafka can work behind a simple web app!
+This is a "Hello World+" application built with Spring Boot and Apache Kafka. I wasn't having any luck with other online tutorials for getting these technologies to work together in a proof-of-concept example, so I decided to create my own. I can't promise that this will work on the first try for everyone, but I've tried to include the exact code structure and set of steps you need to see how Kafka can work behind a simple web app! I call it "Hello World+" because there is some actual (albeit minor) functionality implemented too.
 
 ## Prerequisites beyond the scope of these instructions
   - A JDK (this project uses [Java 1.8](https://www.oracle.com/java/technologies/javase/javase-jdk8-downloads.html) -- if you download a newer version, you will need to modify `init-spring.sh`)
@@ -61,3 +61,32 @@ gradle bootRun
 # How this works
 
 A full explanation of [Kafka](https://kafka.apache.org/intro) or [Spring](https://docs.spring.io/spring-framework/docs/current/reference/html/overview.html) is outside the scope of this project, but I will try to talk through how this application works so that others can get things working. Additionally, the comments in the Java files are meant to be instructive (to me and whoever reads this).
+
+## Project structure
+
+### Non-Java files
+
+The most important file at the root level is build.gradle. It contains information about all of the 3rd-party Java libraries we need. When you execute `gradle build`, all of the listed dependencies are downloaded from Maven (although we could specify a different source) and added to the `libs/` directory, allowing us to `import` them in our Java files. You'll notice that build.gradle basically references 3 technologies: Kafka, Spring Boot, and ThymeLeaf.
+
+Inside the `src/` directory, the files we need at runtime are stored in `main/`, while those we need for testing are stored in `test/`
+
+Inside `src/main/`, we have separate directories for our Java files (`java/`) and everything else (`resources/`). Inside `resources/`, we see some runtime configuration files as well as the `static/` and `templates/` directories, which contain resources used by the Web frontend. Most of the files in `resources` are in the default location expected by Spring and ThymeLeaf. 
+
+`src/main/resources/application.yml` is used by Spring to "inject" values into our runtime code without the need to write any kind of file reader. Many formats are valid for this file, but I chose YAML since it is commonly used by other tools. Right now, `application.yml` is pretty simple, but it may grow in detail as the scope of hello-franz grows.
+
+Inside `src/main/resources/static/` are HTML and JavaScript files that allow the user to interact with the main service. The files in `templates/` are similar, except that they are written in a dialect of XML that is compatible with ThymeLeaf, which allows us to easily write content directly from the Java backend to the Web frontend. 
+
+### Java files
+
+Following Java convention, the folder structure inside `src/main/java` simulates the different parts of an internet domain read in reverse (i.e., hellofranz.com). Inside the `hellofranz` package root is a `main`-like file required by Spring. It contains the `HelloFranzApplication` class, whose `main` method is what actually gets run when we execute `gradle bootRun`.
+
+Inside the `configuration/` directory are config classes that use Spring to load in properties of our Kafka producer and consumer. The `nativekafka/` directory contains a class that uses the consumer configuration to create an actual Kafka Consumer instance. We don't need to do this for the Kafka producer because it is written entirely in Spring's Kafka API, instead of the native Kafka Java library. The consumer does use the Java library, however, so we need to define it in greater detail. This was done as a design choice - the application would behave slightly different if we were forced to use Spring's default consumer behavior.
+
+Finally, the `controller/` directory contains the code that actually responds to the user by defining methods that respond to various HTTP requests. The controller layer is the most "forward-facing" part of the backend, built on top of the classes we mentioned above. For example, the consumer controller creates a `nativekafka.NativeConsumer`, and instantiates it using information from `configuration.ConsumerConfiguration`.
+
+## Chronological view from the user's perspective
+
+Let's consider what happened in our example above. When you click `Send`, the HTTP POST request is issued to the `/send` endpoint (see `kafkaforms.js` for how this data gets sent). POST requests to the `/send` endpoint are handled by the `ProducerController`, which keeps a Kafka producer template running int he background. When a new message comes in, the controller 
+
+## Chronological view from the application's perspecive
+  - Injecting stuff, etc.

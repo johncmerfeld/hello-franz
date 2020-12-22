@@ -1,6 +1,6 @@
 package com.hellofranz.controller;
 
-import com.hellofranz.configuration.ProducerConfiguration;
+import com.hellofranz.nativekafka.NativeAdmin;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -48,9 +48,10 @@ public class ProducerController {
         DateTime dt = new DateTime(DateTimeZone.UTC);
 
         if (recipient != null) {
+            NativeAdmin.createTopicIfNotExists(recipient);
             template.send(recipient, dt + " -- " + message);
         } else {
-            ArrayList<String> topics = ProducerConfiguration.getAllTopics();
+            ArrayList<String> topics = NativeAdmin.getAllTopics();
             for (String topic : topics) {
                 System.out.println("Sending to " + topic);
                 template.send(topic, dt + " -- " + message);

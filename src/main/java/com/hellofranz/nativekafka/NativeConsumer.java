@@ -1,12 +1,9 @@
 package com.hellofranz.nativekafka;
 
 import java.util.*;
-import java.util.concurrent.ExecutionException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.apache.kafka.clients.admin.AdminClient;
-import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.clients.consumer.*;
 import org.apache.kafka.clients.consumer.Consumer;
 
@@ -23,29 +20,9 @@ public class NativeConsumer {
     }
 
     public static Consumer<String, Object> createConsumer(String topic) {
-        final Map<String, Object> props = conf.getConfig();
+        final Map<String, Object> props = conf.getConsumerConfig();
 
-        AdminClient admin = AdminClient.create(props);
-        boolean topicExists = false;
-        try {
-             topicExists = admin.listTopics().names().get().stream().anyMatch(topicName -> topicName.equalsIgnoreCase(topic));
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
-
-        if (! topicExists) {
-            AdminClient adminClient = AdminClient.create(props);
-            NewTopic newTopic = new NewTopic(topic, 1, (short)1); //new NewTopic(topicName, numPartitions, replicationFactor)
-
-            List<NewTopic> newTopics = new ArrayList<NewTopic>();
-            newTopics.add(newTopic);
-
-            adminClient.createTopics(newTopics);
-            adminClient.close();
-        }
+        NativeAdmin.createTopicIfNotExists(topic);
 
         // Create the consumer using props.
         final Consumer<String, Object> consumer = new KafkaConsumer<>(props);

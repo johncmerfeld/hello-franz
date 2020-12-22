@@ -1,5 +1,8 @@
 package com.hellofranz.configuration;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
@@ -7,8 +10,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
 
-import java.util.HashMap;
-import java.util.Map;
 
 @Configuration
 public class ConsumerConfiguration implements InitializingBean {
@@ -31,7 +32,7 @@ public class ConsumerConfiguration implements InitializingBean {
     private String AUTO_OFFSET_RESET;
 
     @Bean
-    public Map<String, Object> getConfig() {
+    public Map<String, Object> getConsumerConfig() {
         Map<String, Object> props = new HashMap<>();
         System.out.println(KAFKA_BROKER);
 
@@ -46,7 +47,7 @@ public class ConsumerConfiguration implements InitializingBean {
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        System.out.println("property myValue:" + KAFKA_BROKER);
+        System.out.println("Bootstrap server:" + KAFKA_BROKER);
     }
 
 }
