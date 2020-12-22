@@ -2,7 +2,8 @@
  -- "View as" user
  -- Logging to files! / mongo?
  -- Branch for "tutorial version"
- -- Smarter get topics method.kaf
+ -- Display success message to API endpoint (SO question about this?)
+ -- Separate divs for users?
  -- Rewrite readme
 
 2. Explore deeper producer behavior

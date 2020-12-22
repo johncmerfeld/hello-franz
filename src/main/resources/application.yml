@@ -9,3 +9,5 @@ kafka:
     group_id: '0'
     trusted_packages: '*'
     auto_offset_reset: 'earliest'
+  producers:
+    ignoretopic: '__consumer_offsets'

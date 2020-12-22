@@ -3,7 +3,6 @@ package com.hellofranz.configuration;
 import org.apache.kafka.clients.admin.AdminClient;
 import org.apache.kafka.clients.admin.ListTopicsOptions;
 import org.apache.kafka.clients.producer.ProducerConfig;
-import org.apache.kafka.common.PartitionInfo;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,6 +23,13 @@ public class ProducerConfiguration {
 
     @Value("${kafka.serializers.str}")
     private Object STRING_SERIALIZER;
+
+    private static String IGNORE_TOPIC;
+
+    @Value("${kafka.producers.ignoretopic}")
+    private void setIgnoreTopic(String topic) {
+        IGNORE_TOPIC = topic;
+    }
 
     @Bean
     public ProducerFactory<String, String> producerFactory() {
@@ -59,6 +65,8 @@ public class ProducerConfiguration {
         /* TODO test this */
         ArrayList<String> results = new ArrayList<String>();
         results.addAll(topics);
+        results.remove(IGNORE_TOPIC);
+        System.out.println("Remoevd " + IGNORE_TOPIC);
         return results;
 
     }
