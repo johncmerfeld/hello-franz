@@ -1,14 +1,11 @@
 package com.hellofranz.controller;
-import java.time.Duration;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.Map;
 
+import java.time.Duration;
+import java.util.Iterator;
 
 import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
-
 import org.springframework.web.bind.annotation.*;
 
 import com.hellofranz.nativekafka.NativeConsumer;

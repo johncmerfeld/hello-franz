@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 
+import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
+
 
 @RestController
 public class KafkaController {
@@ -25,7 +28,7 @@ public class KafkaController {
      */
     @PostMapping("/send")
     public void produce(@RequestParam String message,
-                        @RequestParam(value = "to", required = false) String recipient) {
+                        @RequestParam(value = "to", required = false) String recipient) throws ExecutionException, InterruptedException {
 
 
         DateTime dt = new DateTime(DateTimeZone.UTC);
@@ -33,9 +36,9 @@ public class KafkaController {
         if (recipient != null) {
             template.send(recipient, dt + " -- " + message);
         } else {
-            String[] topics = ProducerConfiguration.getAllTopics();
-            for (int i = 0; i < topics.length; i++) {
-                template.send(topics[i], dt + " -- " + message);
+            ArrayList<String> topics = ProducerConfiguration.getAllTopics();
+            for (String topic : topics) {
+                template.send(topic, dt + " -- " + message);
             }
         }
     }

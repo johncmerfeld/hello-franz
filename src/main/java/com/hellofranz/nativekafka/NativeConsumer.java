@@ -1,21 +1,19 @@
 package com.hellofranz.nativekafka;
 
+import java.util.*;
+import java.util.concurrent.ExecutionException;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.apache.kafka.clients.admin.AdminClient;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.clients.consumer.*;
 import org.apache.kafka.clients.consumer.Consumer;
 
-
-import java.util.*;
-import java.util.concurrent.ExecutionException;
-
 import com.hellofranz.configuration.ConsumerConfiguration;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 @Component
 public class NativeConsumer {
-
 
     private static ConsumerConfiguration conf;
 

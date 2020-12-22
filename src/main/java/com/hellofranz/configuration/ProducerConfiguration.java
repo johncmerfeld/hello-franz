@@ -1,6 +1,9 @@
 package com.hellofranz.configuration;
 
+import org.apache.kafka.clients.admin.AdminClient;
+import org.apache.kafka.clients.admin.ListTopicsOptions;
 import org.apache.kafka.clients.producer.ProducerConfig;
+import org.apache.kafka.common.PartitionInfo;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -8,11 +11,13 @@ import org.springframework.kafka.core.DefaultKafkaProducerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.concurrent.ExecutionException;
 
 @Configuration
 public class ProducerConfiguration {
+
+    private static Map<String, Object> config;
 
     @Value("${kafka.broker}")
     private String KAFKA_BROKER;
@@ -34,6 +39,8 @@ public class ProducerConfiguration {
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, STRING_SERIALIZER);
         props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, STRING_SERIALIZER);
 
+        config = props;
+
         return props;
     }
 
@@ -42,8 +49,18 @@ public class ProducerConfiguration {
         return new KafkaTemplate<>(producerFactory());
     }
 
-    public static String[] getAllTopics() {
-        return new String[]{"johncmerfeld", "kjmerf", "baogorek"};
+    public static ArrayList<String> getAllTopics() throws ExecutionException, InterruptedException {
+        AdminClient adminClient = AdminClient.create(config);
+        ListTopicsOptions listTopicsOptions = new ListTopicsOptions();
+        listTopicsOptions.listInternal(true);
+        Set topics = adminClient.listTopics(listTopicsOptions).names().get();
+
+        /* TODO document this future stuff */
+        /* TODO test this */
+        ArrayList<String> results = new ArrayList<String>();
+        results.addAll(topics);
+        return results;
+
     }
 
 
